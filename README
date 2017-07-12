@@ -1,0 +1,18 @@
+PaghaServer..
+
+Pragha is not dead, but the days of hoarding MP3 files with all your friends to
+make a big collection maybe yes..
+
+At the request of a boss, I've been working on an Ampache plugin for Pragha (See
+https://github.com/pragha-music-player/pragha/pull/90 for details), and now that
+I buy a new computer (good processor, good memory, good screen), but a disk with
+small size (although fast of course), can not keep my collection there.
+
+On the other hand, I have a computer running as a server. Why not put my music
+there?
+
+Until now is only compatible with the Ampache's XML API, and implements only the
+methods that Pragha uses, but the idea is to implement a new API, which fits
+more to the interests of Pragha, and write a new plugin for it.
+
+p.s: NAME OF FEW IDEAS!.
