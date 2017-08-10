@@ -163,8 +163,6 @@ def do_ping():
     auth = request.args.get('auth')
     dbSession = Session.query.filter_by(token=auth).first()
 
-    app.logger.error('Ping: ' + str(dbSession))
-
     if dbSession is None:
         return session_expired()
 
@@ -209,7 +207,6 @@ def do_handshake():
 
     # Check..
     dbSession2 = Session.query.filter_by(token=auth).first()
-    app.logger.error('Handshake: ' + auth + ' => ' + str(dbSession2))
 
     # Response
     n_root = Etree.Element('root')
@@ -233,8 +230,6 @@ def do_songs():
 
     db.session.commit()
     dbSession = Session.query.filter_by(token=auth).first()
-
-    app.logger.error('Songs to auth: ' + auth + " => " + str(dbSession))
 
     #TODO: Check lifetime...
     if dbSession is None:
