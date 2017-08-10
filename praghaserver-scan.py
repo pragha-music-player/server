@@ -151,6 +151,18 @@ def scan_folder (bar, path):
             add_item_db (fullpath)
             bar.next()
 
+def remove_old ():
+    deleteList = []
+    dbSongs = Track.query.all()
+    for song in dbSongs:
+        if os.path.exists(song.filename) == False:
+            deleteList.append(song);
+    bar = Bar('Cleaning deleted files...', max=len(deleteList))
+    for song in deleteList:
+        db.session.delete(song)
+        bar.next()
+    bar.finish()
+
 def count_folder (path):
     fileCount = 0
     for item in os.listdir(path):
@@ -165,6 +177,9 @@ def count_folder (path):
 def update_db(a):
     # Create table.
     db.create_all()
+
+    # Remove deleted songs.
+    remove_old()
 
     # Count files to scan
     filesToScan = count_folder (config.MUSIC_DIR)
