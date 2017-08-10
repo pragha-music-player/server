@@ -10,7 +10,10 @@ def stream_audio():
     song = Track.query.get(int(request.args.get('oid')))
 
     if song == None:
-        return
+        return None
+
+    if os.path.exists(song.filename) == False:
+        return None
 
     path = song.filename
 

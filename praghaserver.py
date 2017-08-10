@@ -147,6 +147,16 @@ def invalid_request():
     response.headers["Content-Type"] = "application/xml"
     return response
 
+# Helper to invalid request.
+def resource_not_found():
+    n_root = Etree.Element('root')
+    Etree.SubElement(n_root, 'error', code='404').text = 'Resorce Fot Found'
+    txt =  Etree.tostring(n_root, encoding='utf8', method='xml')
+    response = Response(txt)
+    response.status_code = 404
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
 
 #/server/xml.server.php?action=ping&auth=AUTH
 def do_ping():
@@ -274,7 +284,11 @@ def dp_play():
     if dbSession is None:
         return session_expired()
 
-    return stream_audio()
+    stream = stream_audio()
+    if stream == None:
+        return resource_not_found()
+    else:
+        return stream
 
 
 # /server/xml.server.php?action=ACTION
