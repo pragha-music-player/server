@@ -12,14 +12,15 @@ def stream_audio():
     if song == None:
         return None
 
-    if os.path.exists(song.filename) == False:
-        return None
-
     path = song.filename
+    path_encoded = path.encode('utf-8')
+
+    if os.path.exists(path_encoded) == False:
+        return None
 
     # Find the file and guess type
     mime = mimetypes.guess_type(path)[0]
-    size = os.path.getsize(path.encode('utf-8'))
+    size = os.path.getsize(path_encoded)
 
     # Send some extra headers
     headers = Headers()
@@ -50,7 +51,7 @@ def stream_audio():
         status = 206
 
     def generate_audio():
-        with open(path.encode('utf-8'), "rb") as handle:
+        with open(path_encoded, "rb") as handle:
             handle.seek(range_start)
             left = content_length
             while left:
